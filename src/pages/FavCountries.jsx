@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
 import Country from "../components/Country";
 import { SearchContext } from "../context/SearchContext";
@@ -11,13 +11,14 @@ export default function FavCountries(){
     const {favoriteCountries, updateFavorite} = useContext(FavoriteContext)
     const {sortValue} = useContext(SortContext)
     const [countryDetail, setCountryDetail] = useState(favoriteCountries[0]?.id || 'IND');
+    const ref = useRef()
 
     useEffect(() => setSearchValue(""), [])
 
     updateFavorite()
 
     function handleSelection(name){
-        document.querySelector('.country-container').style.visibility = "visible"
+        ref.current.style.visibility = "visible"
         setCountryDetail(name)
     }
 
@@ -42,8 +43,8 @@ export default function FavCountries(){
                     population={country.population} />
                 ))}
             </div>
-            <div className="country-container">
-                    <ShowCountry name={countryDetail}/>
+            <div ref={ref} className="country-container">
+                    <ShowCountry name={countryDetail} container={ref}/>
             </div>
         </div>
     )

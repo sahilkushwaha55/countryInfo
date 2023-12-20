@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Loading from "./Loading";
 
-export default function ShowCountry({name}){
+export default function ShowCountry({name, container}){
     const [countryData, setCountryData] = useState({})
     let currenciesName
     const smallWindow = window.innerWidth < 600
@@ -17,7 +16,7 @@ export default function ShowCountry({name}){
     }, [name])
 
     function closeWindow(){
-        document.querySelector('.country-container').style.visibility = 'hidden'
+        container.current.style.visibility = 'hidden'
     }
 
     if(countryData.currencies) [currenciesName] = Object.values(countryData.currencies)
